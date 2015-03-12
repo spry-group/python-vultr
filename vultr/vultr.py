@@ -1,3 +1,4 @@
+import sys
 import requests
 import json as json_module
 
@@ -11,7 +12,7 @@ class VultrError(RuntimeError):
 class Vultr(object):
 
     def __init__(self, api_key):
-        self.endpoint = API_ENDPOINT
+        self.api_endpoint = API_ENDPOINT
         self.api_key = api_key
 
     def snapshot_list(self):
@@ -42,9 +43,9 @@ class Vultr(object):
         Parameters:
         No Parameters
         """
-        pass
+        return self.request('/v1/snapshot/list')
 
-    def snapshot_destroy(self, snapshot_id):
+    def snapshot_destroy(self, snapshotid):
         """
         /v1/snapshot/destroy
         POST - account
@@ -58,9 +59,10 @@ class Vultr(object):
         SNAPSHOTID string Unique identifier for this snapshot.  These can be
         found using the v1/snapshot/list call.
         """
-        pass
+        params = {'SNAPSHOTID': snapshotid}
+        return self.request('/v1/snapshot/create', params, 'POST')
 
-    def snapshot_create(self, sub_id):
+    def snapshot_create(self, subid):
         """
         /v1/snapshot/create
         POST - account
@@ -79,7 +81,8 @@ class Vultr(object):
         from.  See v1/server/list
         description string (optional) Description of snapshot contents
         """
-        pass
+        params = {'SUBID': subid}
+        return self.request('/v1/snapshot/create', params, 'POST')
 
     def iso_list(self):
         """
@@ -102,7 +105,7 @@ class Vultr(object):
         Parameters:
         No Parameters
         """
-        pass
+        return self.request('/v1/iso/list')
 
     def plans_list(self):
         """
@@ -141,7 +144,7 @@ class Vultr(object):
         Parameters:
         No Parameters
         """
-        pass
+        return self.request('/v1/plans/list')
 
     def regions_list(self):
         """
@@ -172,8 +175,9 @@ class Vultr(object):
         Parameters:
         No Parameters
         """
+        return self.request('/v1/regions/list')
 
-    def regions_availability(self, dc_id):
+    def regions_availability(self, dcid):
         """
         /v1/regions/availability
         GET - public
@@ -193,7 +197,8 @@ class Vultr(object):
         Parameters:
         DCID integer Location to check availability of
         """
-        pass
+        params = {'DCID': dcid}
+        return self.request('/v1/regions/availability', params)
 
     def startupscript_list(self):
         """
@@ -227,8 +232,9 @@ class Vultr(object):
         Parameters:
         No Parameters
         """
+        return self.request('/v1/startupscript/list')
 
-    def startupscript_destroy(self):
+    def startupscript_destroy(self, scriptid):
         """
         /v1/startupscript/destroy
         POST - account
@@ -242,9 +248,10 @@ class Vultr(object):
         SCRIPTID string Unique identifier for this startup script.  These can
         be found using the v1/startupscript/list call.
         """
-        pass
+        params = {'SCRIPTID': scriptid}
+        return self.request('/v1/startupscript/destroy', params, 'POST')
 
-    def startupscript_create(self):
+    def startupscript_create(self, name, script):
         """
         /v1/startupscript/create
         POST - account
@@ -263,9 +270,10 @@ class Vultr(object):
         script string Startup script contents
         type string boot|pxe Type of startup script.  Default is 'boot'
         """
-        pass
+        params = {'script': script, 'name': name}
+        return self.request('/v1/startupscript/create', params, 'POST')
 
-    def startupscript_update(self):
+    def startupscript_update(self, scriptid, name, script):
         """
         /v1/startupscript/update
         POST - account
@@ -284,7 +292,14 @@ class Vultr(object):
         name string (optional) New name for the startup script
         script string (optional) New startup script contents
         """
-        pass
+        params = {'SCRIPTID': scriptid}
+        if name is None and script is None:
+            raise VultrError('Either script or name is required.')
+        if name is not None:
+            params['name'] = name
+        if script is not None:
+            params['script'] = script
+        return self.request('/v1/startupscript/update', params, 'POST')
 
     def dns_list(self):
         """
@@ -304,9 +319,9 @@ class Vultr(object):
         Parameters:
         No Parameters
         """
-        pass
+        return self.request('/v1/dns/list')
 
-    def dns_records(self):
+    def dns_records(self, domain):
         """
         /v1/dns/records
         GET - account
@@ -335,9 +350,10 @@ class Vultr(object):
         Parameters:
         domain string Domain to list records for
         """
-        pass
+        params = {'domain': domain}
+        return self.request('/v1/dns/records', params)
 
-    def dns_create_domain(self):
+    def dns_create_domain(self, domain, serverip):
         """
         /v1/dns/create_domain
         POST - account
@@ -354,9 +370,10 @@ class Vultr(object):
         serverip string Server IP to use when creating default records (A and
             MX)
         """
-        pass
+        params = {'domain': domain, 'serverip': serverip}
+        return self.request('/v1/dns/create_domain', params, 'POST')
 
-    def dns_delete_domain(self):
+    def dns_delete_domain(self, domain):
         """
         /v1/dns/delete_domain
         POST - account
@@ -370,9 +387,10 @@ class Vultr(object):
         Parameters:
         domain string Domain name to delete
         """
-        pass
+        params = {'domain': domain}
+        return self.request('/v1/dns/delete_domain', params, 'POST')
 
-    def dns_delete_record(self):
+    def dns_delete_record(self, domain, recordid):
         """
         /v1/dns/delete_record
         POST - account
@@ -388,9 +406,11 @@ class Vultr(object):
         domain string Domain name to delete record from
         RECORDID integer ID of record to delete (see /dns/records)
         """
-        pass
+        params = {'domain': domain, 'RECORDID': recordid}
+        return self.request('/v1/dns/delete_record', params, 'POST')
 
-    def dns_create_record(self):
+    def dns_create_record(self, domain, name, type, data, ttl=None,
+                          priority=None):
         """
         /v1/dns/create_record
         POST - account
@@ -413,7 +433,14 @@ class Vultr(object):
         priority integer (only required for MX and SRV) Priority of this record
             (omit the priority from the data)
         """
-        pass
+        if type == 'MX' or type == 'SRV' and priority is None:
+            raise VultrError('priority is required when type is either of MX \
+                              or SRV.')
+        params = {'domain': domain, 'name': name, 'type': type, 'data': data}
+        if ttl is not None:
+            params['ttl'] = ttl
+        if priority is not None:
+            params['priority'] = priority
 
     def sshkey_list(self):
         """
@@ -435,9 +462,9 @@ class Vultr(object):
         Parameters:
         No Parameters
         """
-        pass
+        return self.request('/v1/sshkey/list')
 
-    def sshkey_destroy(self):
+    def sshkey_destroy(self, sshkeyid):
         """
         /v1/sshkey/destroy
         POST - account
@@ -452,7 +479,8 @@ class Vultr(object):
         SSHKEYID string Unique identifier for this SSH key.  These can be found
             using the v1/sshkey/list call.
         """
-        pass
+        params = {'SSHKEYID': sshkeyid}
+        return self.request('/v1/sshkey/destroy', params, 'POST')
 
     def sshkey_create(self):
         """
@@ -472,9 +500,10 @@ class Vultr(object):
         name string Name of the SSH key
         ssh_key string SSH public key (in authorized_keys format)
         """
-        pass
+        params = {'name': name, 'ssh_key': sshkey}
+        return self.request('/v1/sshkey/update', params, 'POST')
 
-    def sshkey_update(self):
+    def sshkey_update(self, sshkeyid, name=None, ssh_key=None):
         """
         /v1/sshkey/update
         POST - account
@@ -494,7 +523,15 @@ class Vultr(object):
         name string (optional) New name for the SSH key
         ssh_key string (optional) New SSH key contents
         """
-        pass
+        params = {'SSHKEYID': sshkeyid}
+        if name is None and ssh_key is None:
+            raise VultrError('Either ssh_key or name is required.')
+        if name is not None:
+            params['name'] = name
+        if sshkey is not None:
+            params['ssh_key'] = sshkey
+
+        return self.request('/v1/sshkey/update', params, 'POST')
 
     def backup_list(self):
         """
@@ -524,9 +561,9 @@ class Vultr(object):
         Parameters:
         No Parameters
         """
-        pass
+        return self.request('/v1/backup/list')
 
-    def server_list(self):
+    def server_list(self, subid):
         """
         /v1/server/list
         GET - account
@@ -575,7 +612,8 @@ class Vultr(object):
         SUBID integer (optional) Unique identifier of a subscription. Only the
          subscription object will be returned.
         """
-        pass
+        params = {'SUBID': subid}
+        return self.request('/v1/server/list', params)
 
     def server_bandwidth(self):
         """
@@ -629,7 +667,8 @@ class Vultr(object):
         SUBID integer Unique identifier for this subscription.  These can be
             found using the v1/server/list call.
         """
-        pass
+        params = {'SUBID': subid}
+        return self.request('/v1/server/bandwidth', params)
 
     def server_reboot(self):
         """
@@ -646,7 +685,8 @@ class Vultr(object):
         SUBID integer Unique identifier for this subscription.  These can be
             found using the v1/server/list call.
         """
-        pass
+        params = {'SUBID': subid}
+        return self.request('/v1/server/reboot', params, 'POST')
 
     def server_halt(self):
         """
@@ -665,7 +705,8 @@ class Vultr(object):
         SUBID integer Unique identifier for this subscription.  These can be
             found using the v1/server/list call.
         """
-        pass
+        params = {'SUBID': subid}
+        return self.request('/v1/server/halt', params, 'POST')
 
     def server_start(self):
         """
@@ -682,7 +723,8 @@ class Vultr(object):
         SUBID integer Unique identifier for this subscription.  These can be
             found using the v1/server/list call.
         """
-        pass
+        params = {'SUBID': subid}
+        return self.request('/v1/server/start', params, 'POST')
 
     def server_destroy(self):
         """
@@ -700,7 +742,8 @@ class Vultr(object):
         SUBID integer Unique identifier for this subscription.  These can be
             found using the v1/server/list call.
         """
-        pass
+        params = {'SUBID': subid}
+        return self.request('/v1/server/destroy', params, 'POST')
 
     def server_reinstall(self):
         """
@@ -718,9 +761,10 @@ class Vultr(object):
         SUBID integer Unique identifier for this subscription.  These can be
             found using the v1/server/list call.
         """
-        pass
+        params = {'SUBID': subid}
+        return self.request('/v1/server/reinstall', params, 'POST')
 
-    def server_restore_snapshot(self):
+    def server_restore_snapshot(self, subid, snapshotid):
         """
         /v1/server/restore_snapshot
         POST - account
@@ -737,9 +781,10 @@ class Vultr(object):
         SNAPSHOTID string SNAPSHOTID (see v1/snapshot/list) to restore to this
             instance
         """
-        pass
+        params = {'SUBID': subid, 'SNAPSHOTID': snapshotid}
+        return self.request('/v1/server/restore_snapshot', params, 'POST')
 
-    def server_restore_backup(self):
+    def server_restore_backup(self, subid, backupid):
         """
         /v1/server/restore_backup
         POST - account
@@ -756,9 +801,14 @@ class Vultr(object):
         BACKUPID string BACKUPID (see v1/backup/list) to restore to this
             instance
         """
-        pass
+        params = {'SUBID': subid, 'BACKUPID': backupid}
+        return self.request('/v1/server/restore_backup', params, 'POST')
 
-    def server_create(self):
+    def server_create(self, dcid, vpsplanid, osid, ipxe_chain_url=None,
+                      isoid=None, scriptid=None, snapshotid=None,
+                      enable_ipv6=None, enable_private_network=None,
+                      label=None, sshkeyid=None, auto_backups=None,
+                      appid=None):
         """
         /v1/server/create
         POST - account
@@ -809,9 +859,30 @@ class Vultr(object):
         APPID integer (optional) If launching an application (OSID 186), this
             is the APPID to launch. See v1/app/list.
         """
-        pass
+        params = {'DCID': dcid, 'VPSPLANID': vpsplanid, 'OSID': osid}
+        if ipxe_chain_url is not None:
+            params['ipxe_chain_url'] = ipxe_chain_url
+        if isoid is not None:
+            params['isoid'] = isoid
+        if scriptid is not None:
+            params['scriptid'] = scriptid
+        if snapshotid is not None:
+            params['snapshotid'] = snapshotid
+        if enable_ipv6 is not None:
+            params['enable_ipv6'] = enable_ipv6
+        if enable_private_network is not None:
+            params['enable_private_network'] = enable_private_network
+        if label is not None:
+            params['label'] = label
+        if sshkeyid is not None:
+            params['sshkeyid'] = sshkeyid
+        if auto_backups is not None:
+            params['auto_backups'] = auto_backups
+        if appid is not None:
+            params['appid'] = appid
+        return self.request('/v1/server/create', params, 'POST')
 
-    def server_list_ipv4(self):
+    def server_list_ipv4(self, subid):
         """
         /v1/server/list_ipv4
         GET - account
@@ -850,7 +921,8 @@ class Vultr(object):
         Parameters:
         No Parameters
         """
-        pass
+        params = {'SUBID': subid}
+        return self.request('/v1/server/list_ipv4', params)
 
     def server_reverse_set_ipv4(self):
         """
@@ -870,9 +942,10 @@ class Vultr(object):
             found with the v1/server/list_ipv4 call.
         entry string reverse DNS entry.
         """
-        pass
+        params = {'SUBID': subid, 'ip': ip, 'entry': entry}
+        return self.request('/v1/server/reverse_set_ipv4', params, 'POST')
 
-    def server_reverse_default_ipv4(self):
+    def server_reverse_default_ipv4(self, subid, ip):
         """
         /v1/server/reverse_default_ipv4
         POST - account
@@ -891,7 +964,8 @@ class Vultr(object):
         ip string IPv4 address used in the reverse DNS update. These can be
             found with the v1/server/list_ipv4 call.
         """
-        pass
+        params = {'SUBID': subid, 'ip': ip}
+        return self.request('/v1/server/reverse_default_ipv4', params, 'POST')
 
     def server_list_ipv6(self):
         """
@@ -918,7 +992,8 @@ class Vultr(object):
         Parameters:
         No Parameters
         """
-        pass
+        params = {'SUBID': subid}
+        return self.request('/v1/server/list_ipv6', params)
 
     def server_reverse_list_ipv6(self):
         """
@@ -948,9 +1023,10 @@ class Vultr(object):
         Parameters:
         No Parameters
         """
-        pass
+        params = {'SUBID': subid}
+        return self.request('/v1/server/reverse_list_ipv6', params)
 
-    def server_reverse_set_ipv6(self):
+    def server_reverse_set_ipv6(self, subid, ip, entry):
         """
         /v1/server/reverse_set_ipv6
         POST - account
@@ -969,9 +1045,10 @@ class Vultr(object):
             calls.
         entry string reverse DNS entry.
         """
-        pass
+        params = {'SUBID': subid, 'ip': ip, 'entry': entry}
+        return self.request('/v1/server/reverse_set_ipv6', params, 'POST')
 
-    def server_reverse_delete_ipv6(self):
+    def server_reverse_delete_ipv6(self, subid, ip):
         """
         /v1/server/reverse_delete_ipv6
         POST - account
@@ -989,9 +1066,10 @@ class Vultr(object):
         ip string IPv6 address used in the reverse DNS update. These can be
             found with the v1/server/reverse_list_ipv6 call.
         """
-        pass
+        params = {'SUBID': subid, 'ip': ip}
+        return self.request('/v1/server/reverse_delete_ipv6', params, 'POST')
 
-    def server_label_set(self):
+    def server_label_set(self, subid, label):
         """
         /v1/server/label_set
         POST - account
@@ -1007,9 +1085,10 @@ class Vultr(object):
         label string This is a text label that will be shown in the control
             panel.
         """
-        pass
+        params = {'SUBID': subid, 'label': label}
+        return self.request('/v1/server/label_set', params, 'POST')
 
-    def server_create_ipv4(self):
+    def server_create_ipv4(self, subid, reboot):
         """
         /v1/server/create_ipv4
         POST - account
@@ -1028,9 +1107,10 @@ class Vultr(object):
         reboot string (optional, default 'yes') 'yes' or 'no'. If yes, the
             server is rebooted immediately.
         """
-        pass
+        params = {'SUBID': subid, 'reboot': reboot}
+        return self.request('/v1/server/destroy_ipv4', params, 'POST')
 
-    def server_destroy_ipv4(self):
+    def server_destroy_ipv4(self, subid, ip):
         """
         /v1/server/destroy_ipv4
         POST - account
@@ -1047,7 +1127,8 @@ class Vultr(object):
         found using the v1/server/list call.
         ip string IPv4 address to remove.
         """
-        pass
+        params = {'SUBID': subid, 'ip': ip}
+        return self.request('/v1/server/destroy_ipv4', params, 'POST')
 
     def server_os_change_list(self):
         """
@@ -1082,9 +1163,10 @@ class Vultr(object):
         SUBID integer Unique identifier for this subscription. These can be
             found using the v1/server/list call.
         """
-        pass
+        params = {'SUBID': subid}
+        return self.request('/v1/server/os_change_list', params)
 
-    def server_os_change(self):
+    def server_os_change(self, subid, osid):
         """
         /v1/server/os_change
         POST - account
@@ -1100,7 +1182,8 @@ class Vultr(object):
             found using the v1/server/list call.
         OSID integer Operating system to use. See /v1/server/os_change_list.
         """
-        pass
+        params = {'SUBID': subid, 'OSID': osid}
+        return self.request('/v1/server/os_change', params)
 
     def server_upgrade_plan_list(self):
         """
@@ -1122,9 +1205,10 @@ class Vultr(object):
         SUBID integer Unique identifier for this subscription. These can be
             found using the v1/server/list call.
         """
-        pass
+        params = {'SUBID': subid}
+        return self.request('/v1/server/upgrade_plan_list', params)
 
-    def server_upgrade_plan(self):
+    def server_upgrade_plan(self, subid, vpsplanid):
         """
         /v1/server/upgrade_plan
         POST - account
@@ -1140,7 +1224,8 @@ class Vultr(object):
             found using the v1/server/list call.
         VPSPLANID integer The new plan. See /v1/server/upgrade_plan_list.
         """
-        pass
+        params = {'SUBID': subid, 'VPSPLANID': vpsplanid}
+        return self.request('/v1/server/upgrade_plan', params, 'POST')
 
     def app_list(self):
         """
@@ -1169,7 +1254,7 @@ class Vultr(object):
         Parameters:
         No Parameters
         """
-        pass
+        return self.request('/v1/app/list')
 
     def account_info(self):
         """
@@ -1189,7 +1274,7 @@ class Vultr(object):
         Parameters:
         No Parameters
         """
-        pass
+        return self.request('/v1/account/info')
 
     def os_list(self):
         """
@@ -1221,8 +1306,67 @@ class Vultr(object):
         Parameters:
         No Parameters
         """
-        pass
+        return self.request('/v1/os/list')
+
+    def request(self, path, params={}, method='GET'):
+        if not path.startswith('/'):
+            path = '/' + path
+        url = self.api_endpoint + path
+        params['api_key'] = self.api_key
+
+        try:
+            if method == 'POST':
+                resp = requests.post(url, data=params, timeout=60)
+            elif method == 'GET':
+                resp = requests.get(url, params=params, timeout=60)
+            else:
+                raise VultrError('Unsupported method %s' % method)
+
+        except requests.RequestException as e:  # errors from requests
+            raise RuntimeError(e)
+
+        if resp.status_code != 200:
+            if resp.status_code == 400:
+                raise VultrError('Invalid API location. Check the URL that you \
+                                  are using')
+            elif resp.status_code == 403:
+                raise VultrError('Invalid or missing API key. Check that your \
+                                  API key is present and matches your assigned\
+                                  key')
+            elif resp.status_code == 405:
+                raise VultrError('Invalid HTTP method. Check that the method \
+                                  (POST|GET) matches what the documentation \
+                                  indicates')
+            elif resp.status_code == 412:
+
+                raise VultrError('Request failed. Check the response body for \
+                                  a more detailed description' + resp.json())
+            elif resp.status_code == 500:
+                raise VultrError('Internal server error. Try again at a later \
+                                  time')
+            elif resp.status_code == 503:
+                raise VultrError('Rate limit hit. API requests are limited to \
+                                  an average of 1/s. Try your request again \
+                                  later.')
+
+        return resp.json()
+
 
 if __name__ == '__main__':
     print "Vultr API Python Libary"
     print "http://vultr.com"
+
+    api_key = ''
+    if len(sys.argv) > 1:
+        api_key = sys.argv[1]
+
+    vultr = Vultr(api_key)
+
+    print vultr.iso_list()
+    print vultr.plans_list()
+    print vultr.regions_list()
+    print vultr.os_list()
+    print vultr.app_list()
+
+    if api_key:
+        print vultr.account_info()
