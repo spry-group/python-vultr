@@ -1,6 +1,8 @@
 Vultr
 =====
-
+.. image:: https://travis-ci.org/spry-group/python-vultr.svg?branch=master
+    :target: https://travis-ci.org/spry-group/python-vultr
+    
 Vultr provides a client library to the Vultr.com API.
 
 **Usage**
