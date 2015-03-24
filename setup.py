@@ -32,4 +32,5 @@ setup(
         'Topic :: Software Development :: Libraries :: Python Modules'
     ],
     license=read('LICENSE'),
+    test_suite='tests'
 )
