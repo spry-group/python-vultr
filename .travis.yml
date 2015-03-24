@@ -8,4 +8,4 @@ python:
   - "nightly"
 install:
   - "pip install ."
-script: "python setup.py test"
+script: "python setup.py develop && python setup.py test"
