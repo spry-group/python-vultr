@@ -1312,12 +1312,13 @@ class Vultr(object):
         if not path.startswith('/'):
             path = '/' + path
         url = self.api_endpoint + path
-        params['api_key'] = self.api_key
 
         try:
             if method == 'POST':
+                url += "?api_key=" + self.api_key
                 resp = requests.post(url, data=params, timeout=60)
             elif method == 'GET':
+                params['api_key'] = self.api_key
                 resp = requests.get(url, params=params, timeout=60)
             else:
                 raise VultrError('Unsupported method %s' % method)
