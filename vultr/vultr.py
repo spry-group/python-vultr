@@ -863,11 +863,11 @@ class Vultr(object):
         if ipxe_chain_url is not None:
             params['ipxe_chain_url'] = ipxe_chain_url
         if isoid is not None:
-            params['isoid'] = isoid
+            params['ISOID'] = isoid
         if scriptid is not None:
-            params['scriptid'] = scriptid
+            params['SCRIPTID'] = scriptid
         if snapshotid is not None:
-            params['snapshotid'] = snapshotid
+            params['SNAPSHOTID'] = snapshotid
         if enable_ipv6 is not None:
             params['enable_ipv6'] = enable_ipv6
         if enable_private_network is not None:
@@ -875,11 +875,11 @@ class Vultr(object):
         if label is not None:
             params['label'] = label
         if sshkeyid is not None:
-            params['sshkeyid'] = sshkeyid
+            params['SSHKEYID'] = sshkeyid
         if auto_backups is not None:
             params['auto_backups'] = auto_backups
         if appid is not None:
-            params['appid'] = appid
+            params['APPID'] = appid
         return self.request('/v1/server/create', params, 'POST')
 
     def server_list_ipv4(self, subid):
