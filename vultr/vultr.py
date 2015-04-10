@@ -1329,27 +1329,27 @@ class Vultr(object):
 
         if resp.status_code != 200:
             if resp.status_code == 400:
-                raise VultrError('Invalid API location. Check the URL that you \
-                                  are using')
+                raise VultrError('Invalid API location. Check the URL that' +
+                                 ' you are using')
             elif resp.status_code == 403:
-                raise VultrError('Invalid or missing API key. Check that your \
-                                  API key is present and matches your assigned\
-                                  key')
+                raise VultrError('Invalid or missing API key. Check that' +
+                                 ' your API key is present and matches' +
+                                 ' your assigned key')
             elif resp.status_code == 405:
-                raise VultrError('Invalid HTTP method. Check that the method \
-                                  (POST|GET) matches what the documentation \
-                                  indicates')
+                raise VultrError('Invalid HTTP method. Check that the' +
+                                 ' method (POST|GET) matches what the' +
+                                 ' documentation indicates')
             elif resp.status_code == 412:
                 raise VultrError('Request failed. Check the response body ' +
                                  'for a more detailed description. Body: \n' +
                                  resp.text)
             elif resp.status_code == 500:
-                raise VultrError('Internal server error. Try again at a later \
-                                  time')
+                raise VultrError('Internal server error. Try again at a' +
+                                 ' later time')
             elif resp.status_code == 503:
-                raise VultrError('Rate limit hit. API requests are limited to \
-                                  an average of 1/s. Try your request again \
-                                  later.')
+                raise VultrError('Rate limit hit. API requests are limited' +
+                                 ' to an average of 1/s. Try your request' +
+                                 ' again later.')
 
         return resp.json()
 

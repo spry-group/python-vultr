@@ -45,7 +45,7 @@ class AuthenticatedTests(unittest.TestCase):
         try:
             response = self.vultr.server_label_set('', '')
         except VultrError as e:
-            msg = e.message
+            msg = str(e)
             self.assertEqual(msg, "Request failed. Check the response body" +
                                   " for a more detailed description. Body:" +
                                   " \nInvalid server.  Check SUBID value and" +
