@@ -26,7 +26,8 @@ class AuthenticatedTests(unittest.TestCase):
     def setUp(self):
         if os.environ.get('VULTR_KEY') is None:
             raise Exception(
-                'AuthenticatedTests Require the VULTR_KEY environment varaible to be set.')
+                'AuthenticatedTests Require the VULTR_KEY environment' +
+                ' varaible to be set.')
         self.vultr = Vultr(os.environ['VULTR_KEY'])
 
     def test_get_api_key(self):
