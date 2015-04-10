@@ -1,6 +1,6 @@
 import unittest
 import os
-from vultr import Vultr
+from vultr import Vultr, VultrError
 
 
 class UnauthenticateTests(unittest.TestCase):
@@ -31,6 +31,17 @@ class AuthenticatedTests(unittest.TestCase):
 
     def test_iso_list(self):
         response = self.vultr.iso_list()
+
+    def test_post_api_key(self):
+        try:
+            response = self.vultr.server_label_set('', '')
+        except VultrError as e:
+            msg = e.message
+            self.assertEqual(msg, "Request failed. Check the response body" +
+                                  " for a more detailed description. Body:" +
+                                  " \nInvalid server.  Check SUBID value and" +
+                                  " ensure your API key matches the server's" +
+                                  " account")
 
 
 if __name__ == '__main__':
