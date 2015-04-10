@@ -1340,9 +1340,9 @@ class Vultr(object):
                                   (POST|GET) matches what the documentation \
                                   indicates')
             elif resp.status_code == 412:
-
-                raise VultrError('Request failed. Check the response body for \
-                                  a more detailed description' + resp.json())
+                raise VultrError('Request failed. Check the response body ' +
+                                 'for a more detailed description. Body: \n' +
+                                 resp.text)
             elif resp.status_code == 500:
                 raise VultrError('Internal server error. Try again at a later \
                                   time')
