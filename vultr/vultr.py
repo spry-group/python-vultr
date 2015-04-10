@@ -863,11 +863,11 @@ class Vultr(object):
         if ipxe_chain_url is not None:
             params['ipxe_chain_url'] = ipxe_chain_url
         if isoid is not None:
-            params['isoid'] = isoid
+            params['ISOID'] = isoid
         if scriptid is not None:
-            params['scriptid'] = scriptid
+            params['SCRIPTID'] = scriptid
         if snapshotid is not None:
-            params['snapshotid'] = snapshotid
+            params['SNAPSHOTID'] = snapshotid
         if enable_ipv6 is not None:
             params['enable_ipv6'] = enable_ipv6
         if enable_private_network is not None:
@@ -875,11 +875,11 @@ class Vultr(object):
         if label is not None:
             params['label'] = label
         if sshkeyid is not None:
-            params['sshkeyid'] = sshkeyid
+            params['SSHKEYID'] = sshkeyid
         if auto_backups is not None:
             params['auto_backups'] = auto_backups
         if appid is not None:
-            params['appid'] = appid
+            params['APPID'] = appid
         return self.request('/v1/server/create', params, 'POST')
 
     def server_list_ipv4(self, subid):
@@ -1312,12 +1312,14 @@ class Vultr(object):
         if not path.startswith('/'):
             path = '/' + path
         url = self.api_endpoint + path
-        params['api_key'] = self.api_key
 
         try:
             if method == 'POST':
-                resp = requests.post(url, data=params, timeout=60)
+                query = {'api_key': self.api_key}
+                resp = requests.post(url, params=query, data=params,
+                                     timeout=60)
             elif method == 'GET':
+                params['api_key'] = self.api_key
                 resp = requests.get(url, params=params, timeout=60)
             else:
                 raise VultrError('Unsupported method %s' % method)
@@ -1327,34 +1329,34 @@ class Vultr(object):
 
         if resp.status_code != 200:
             if resp.status_code == 400:
-                raise VultrError('Invalid API location. Check the URL that you \
-                                  are using')
+                raise VultrError('Invalid API location. Check the URL that' +
+                                 ' you are using')
             elif resp.status_code == 403:
-                raise VultrError('Invalid or missing API key. Check that your \
-                                  API key is present and matches your assigned\
-                                  key')
+                raise VultrError('Invalid or missing API key. Check that' +
+                                 ' your API key is present and matches' +
+                                 ' your assigned key')
             elif resp.status_code == 405:
-                raise VultrError('Invalid HTTP method. Check that the method \
-                                  (POST|GET) matches what the documentation \
-                                  indicates')
+                raise VultrError('Invalid HTTP method. Check that the' +
+                                 ' method (POST|GET) matches what the' +
+                                 ' documentation indicates')
             elif resp.status_code == 412:
-
-                raise VultrError('Request failed. Check the response body for \
-                                  a more detailed description' + resp.json())
+                raise VultrError('Request failed. Check the response body ' +
+                                 'for a more detailed description. Body: \n' +
+                                 resp.text)
             elif resp.status_code == 500:
-                raise VultrError('Internal server error. Try again at a later \
-                                  time')
+                raise VultrError('Internal server error. Try again at a' +
+                                 ' later time')
             elif resp.status_code == 503:
-                raise VultrError('Rate limit hit. API requests are limited to \
-                                  an average of 1/s. Try your request again \
-                                  later.')
+                raise VultrError('Rate limit hit. API requests are limited' +
+                                 ' to an average of 1/s. Try your request' +
+                                 ' again later.')
 
         return resp.json()
 
 
 if __name__ == '__main__':
-    print "Vultr API Python Libary"
-    print "http://vultr.com"
+    print("Vultr API Python Libary")
+    print("http://vultr.com")
 
     api_key = ''
     if len(sys.argv) > 1:
@@ -1362,11 +1364,11 @@ if __name__ == '__main__':
 
     vultr = Vultr(api_key)
 
-    print vultr.iso_list()
-    print vultr.plans_list()
-    print vultr.regions_list()
-    print vultr.os_list()
-    print vultr.app_list()
+    print (vultr.iso_list())
+    print (vultr.plans_list())
+    print (vultr.regions_list())
+    print (vultr.os_list())
+    print (vultr.app_list())
 
     if api_key:
-        print vultr.account_info()
+        print (vultr.account_info())
