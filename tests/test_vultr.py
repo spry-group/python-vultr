@@ -29,7 +29,7 @@ class AuthenticatedTests(unittest.TestCase):
                 'AuthenticatedTests Require the VULTR_KEY environment varaible to be set.')
         self.vultr = Vultr(os.environ['VULTR_KEY'])
 
-    def test_iso_list(self):
+    def test_get_api_key(self):
         response = self.vultr.iso_list()
 
     def test_post_api_key(self):
