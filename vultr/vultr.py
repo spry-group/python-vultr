@@ -1353,8 +1353,8 @@ class Vultr(object):
 
 
 if __name__ == '__main__':
-    print "Vultr API Python Libary"
-    print "http://vultr.com"
+    print("Vultr API Python Libary")
+    print("http://vultr.com")
 
     api_key = ''
     if len(sys.argv) > 1:
@@ -1362,11 +1362,11 @@ if __name__ == '__main__':
 
     vultr = Vultr(api_key)
 
-    print vultr.iso_list()
-    print vultr.plans_list()
-    print vultr.regions_list()
-    print vultr.os_list()
-    print vultr.app_list()
+    print (vultr.iso_list())
+    print (vultr.plans_list())
+    print (vultr.regions_list())
+    print (vultr.os_list())
+    print (vultr.app_list())
 
     if api_key:
-        print vultr.account_info()
+        print (vultr.account_info())
