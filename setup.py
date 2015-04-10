@@ -13,6 +13,9 @@ def read(filename):
 setup(
     name='vultr',
     version='0.1.0',
+    install_requires=[
+      "requests"
+    ],
     description='Vultr.com API Client',
     long_description=(read('README.rst')),
     url='http://github.com/spry-group/python-vultr',
