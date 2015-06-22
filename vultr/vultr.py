@@ -1315,11 +1315,13 @@ class Vultr(object):
 
         try:
             if method == 'POST':
-                query = {'api_key': self.api_key}
+                if (self.api_key):
+                    query = {'api_key': self.api_key}
                 resp = requests.post(url, params=query, data=params,
                                      timeout=60)
             elif method == 'GET':
-                params['api_key'] = self.api_key
+                if (self.api_key):
+                    params['api_key'] = self.api_key
                 resp = requests.get(url, params=params, timeout=60)
             else:
                 raise VultrError('Unsupported method %s' % method)
