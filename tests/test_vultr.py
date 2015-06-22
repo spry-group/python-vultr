@@ -24,10 +24,11 @@ class UnauthenticateTests(unittest.TestCase):
 
 @unittest.skipIf(not os.environ.get('VULTR_KEY'), 'Skipping AuthenticatedTests')
 class AuthenticatedTests(unittest.TestCase):
-
-    def setUp(self):
-        self.VULTR_KEY = os.environ.get('VULTR_KEY')
-        self.vultr = Vultr(self.VULTR_KEY)
+    @classmethod
+    def setUpClass(cls):
+        cls.VULTR_KEY = os.environ.get('VULTR_KEY')
+        cls.vultr = Vultr(cls.VULTR_KEY)
+        cls.server_list = {}
 
     def test_get_api_key(self):
         response = self.vultr.iso_list()
