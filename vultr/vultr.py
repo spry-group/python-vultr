@@ -686,7 +686,7 @@ class Vultr(object):
             found using the v1/server/list call.
         """
         params = {'SUBID': subid}
-        return self.request('/v1/server/reboot', params, 'POST', json=False)
+        return self.request('/v1/server/reboot', params, 'POST')
 
     def server_halt(self, subid):
         """
@@ -1308,7 +1308,7 @@ class Vultr(object):
         """
         return self.request('/v1/os/list')
 
-    def request(self, path, params={}, method='GET', json=True):
+    def request(self, path, params={}, method='GET'):
         if not path.startswith('/'):
             path = '/' + path
         url = self.api_endpoint + path
@@ -1351,10 +1351,12 @@ class Vultr(object):
                                  ' to an average of 1/s. Try your request' +
                                  ' again later.')
 
-        if json:
-            return resp.json()
+        # return an empty json object if the API
+        # doesn't respond with a value.
+        if not resp.text:
+            return json_module.loads('{}')
         else:
-            return resp.text
+            return resp.json()
 
 
 if __name__ == '__main__':
