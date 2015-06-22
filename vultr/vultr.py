@@ -2,7 +2,7 @@ import sys
 import requests
 import time
 import json as json_module
-
+from os import environ
 API_ENDPOINT = 'https://api.vultr.com'
 
 
@@ -1375,7 +1375,7 @@ if __name__ == '__main__':
     print("Vultr API Python Libary")
     print("http://vultr.com")
 
-    api_key = ''
+    api_key = environ.get('VULTR_KEY')
     if len(sys.argv) > 1:
         api_key = sys.argv[1]
 
