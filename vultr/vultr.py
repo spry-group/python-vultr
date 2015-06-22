@@ -615,7 +615,7 @@ class Vultr(object):
         params = {'SUBID': subid}
         return self.request('/v1/server/list', params)
 
-    def server_bandwidth(self):
+    def server_bandwidth(self, subid):
         """
         /v1/server/bandwidth
         GET - account
@@ -670,7 +670,7 @@ class Vultr(object):
         params = {'SUBID': subid}
         return self.request('/v1/server/bandwidth', params)
 
-    def server_reboot(self):
+    def server_reboot(self, subid):
         """
         /v1/server/reboot
         POST - account
@@ -688,7 +688,7 @@ class Vultr(object):
         params = {'SUBID': subid}
         return self.request('/v1/server/reboot', params, 'POST')
 
-    def server_halt(self):
+    def server_halt(self, subid):
         """
         /v1/server/halt
         POST - account
@@ -708,7 +708,7 @@ class Vultr(object):
         params = {'SUBID': subid}
         return self.request('/v1/server/halt', params, 'POST')
 
-    def server_start(self):
+    def server_start(self, subid):
         """
         /v1/server/start
         POST - account
@@ -726,7 +726,7 @@ class Vultr(object):
         params = {'SUBID': subid}
         return self.request('/v1/server/start', params, 'POST')
 
-    def server_destroy(self):
+    def server_destroy(self, subid):
         """
         /v1/server/destroy
         POST - account
@@ -745,7 +745,7 @@ class Vultr(object):
         params = {'SUBID': subid}
         return self.request('/v1/server/destroy', params, 'POST')
 
-    def server_reinstall(self):
+    def server_reinstall(self, subid):
         """
         /v1/server/reinstall
         POST - account
@@ -924,7 +924,7 @@ class Vultr(object):
         params = {'SUBID': subid}
         return self.request('/v1/server/list_ipv4', params)
 
-    def server_reverse_set_ipv4(self):
+    def server_reverse_set_ipv4(self, subid, ip, entry):
         """
         /v1/server/reverse_set_ipv4
         POST - account
@@ -967,7 +967,7 @@ class Vultr(object):
         params = {'SUBID': subid, 'ip': ip}
         return self.request('/v1/server/reverse_default_ipv4', params, 'POST')
 
-    def server_list_ipv6(self):
+    def server_list_ipv6(self, subid):
         """
         /v1/server/list_ipv6
         GET - account
@@ -995,7 +995,7 @@ class Vultr(object):
         params = {'SUBID': subid}
         return self.request('/v1/server/list_ipv6', params)
 
-    def server_reverse_list_ipv6(self):
+    def server_reverse_list_ipv6(self, subid):
         """
         /v1/server/reverse_list_ipv6
         GET - account
@@ -1130,7 +1130,7 @@ class Vultr(object):
         params = {'SUBID': subid, 'ip': ip}
         return self.request('/v1/server/destroy_ipv4', params, 'POST')
 
-    def server_os_change_list(self):
+    def server_os_change_list(self, subid):
         """
         /v1/server/os_change_list
         GET - account
@@ -1185,7 +1185,7 @@ class Vultr(object):
         params = {'SUBID': subid, 'OSID': osid}
         return self.request('/v1/server/os_change', params)
 
-    def server_upgrade_plan_list(self):
+    def server_upgrade_plan_list(self, subid):
         """
         /v1/server/upgrade_plan_list
         GET - account
