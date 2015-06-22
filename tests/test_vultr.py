@@ -46,5 +46,8 @@ class AuthenticatedTests(unittest.TestCase):
     def test_account_info(self):
         response = self.vultr.account_info()
 
+    def test_server_create(self):
+        response = self.vultr.server_create(vpsplanid=29, dcid=1, osid=191 )
+
 if __name__ == '__main__':
     unittest.main()
