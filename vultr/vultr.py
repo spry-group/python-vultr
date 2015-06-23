@@ -1,7 +1,8 @@
 import sys
 import requests
+import time
 import json as json_module
-
+from os import environ
 API_ENDPOINT = 'https://api.vultr.com'
 
 
@@ -14,6 +15,8 @@ class Vultr(object):
     def __init__(self, api_key):
         self.api_endpoint = API_ENDPOINT
         self.api_key = api_key
+        self.requestsPerSecond = 1
+        self.requestDuration = 1 / self.requestsPerSecond
 
     def snapshot_list(self):
         """
@@ -563,7 +566,7 @@ class Vultr(object):
         """
         return self.request('/v1/backup/list')
 
-    def server_list(self, subid):
+    def server_list(self, subid=None):
         """
         /v1/server/list
         GET - account
@@ -615,7 +618,7 @@ class Vultr(object):
         params = {'SUBID': subid}
         return self.request('/v1/server/list', params)
 
-    def server_bandwidth(self):
+    def server_bandwidth(self, subid):
         """
         /v1/server/bandwidth
         GET - account
@@ -670,7 +673,7 @@ class Vultr(object):
         params = {'SUBID': subid}
         return self.request('/v1/server/bandwidth', params)
 
-    def server_reboot(self):
+    def server_reboot(self, subid):
         """
         /v1/server/reboot
         POST - account
@@ -688,7 +691,7 @@ class Vultr(object):
         params = {'SUBID': subid}
         return self.request('/v1/server/reboot', params, 'POST')
 
-    def server_halt(self):
+    def server_halt(self, subid):
         """
         /v1/server/halt
         POST - account
@@ -708,7 +711,7 @@ class Vultr(object):
         params = {'SUBID': subid}
         return self.request('/v1/server/halt', params, 'POST')
 
-    def server_start(self):
+    def server_start(self, subid):
         """
         /v1/server/start
         POST - account
@@ -726,7 +729,7 @@ class Vultr(object):
         params = {'SUBID': subid}
         return self.request('/v1/server/start', params, 'POST')
 
-    def server_destroy(self):
+    def server_destroy(self, subid):
         """
         /v1/server/destroy
         POST - account
@@ -745,7 +748,7 @@ class Vultr(object):
         params = {'SUBID': subid}
         return self.request('/v1/server/destroy', params, 'POST')
 
-    def server_reinstall(self):
+    def server_reinstall(self, subid):
         """
         /v1/server/reinstall
         POST - account
@@ -924,7 +927,7 @@ class Vultr(object):
         params = {'SUBID': subid}
         return self.request('/v1/server/list_ipv4', params)
 
-    def server_reverse_set_ipv4(self):
+    def server_reverse_set_ipv4(self, subid, ip, entry):
         """
         /v1/server/reverse_set_ipv4
         POST - account
@@ -967,7 +970,7 @@ class Vultr(object):
         params = {'SUBID': subid, 'ip': ip}
         return self.request('/v1/server/reverse_default_ipv4', params, 'POST')
 
-    def server_list_ipv6(self):
+    def server_list_ipv6(self, subid):
         """
         /v1/server/list_ipv6
         GET - account
@@ -995,7 +998,7 @@ class Vultr(object):
         params = {'SUBID': subid}
         return self.request('/v1/server/list_ipv6', params)
 
-    def server_reverse_list_ipv6(self):
+    def server_reverse_list_ipv6(self, subid):
         """
         /v1/server/reverse_list_ipv6
         GET - account
@@ -1130,7 +1133,7 @@ class Vultr(object):
         params = {'SUBID': subid, 'ip': ip}
         return self.request('/v1/server/destroy_ipv4', params, 'POST')
 
-    def server_os_change_list(self):
+    def server_os_change_list(self, subid):
         """
         /v1/server/os_change_list
         GET - account
@@ -1185,7 +1188,7 @@ class Vultr(object):
         params = {'SUBID': subid, 'OSID': osid}
         return self.request('/v1/server/os_change', params)
 
-    def server_upgrade_plan_list(self):
+    def server_upgrade_plan_list(self, subid):
         """
         /v1/server/upgrade_plan_list
         GET - account
@@ -1309,17 +1312,21 @@ class Vultr(object):
         return self.request('/v1/os/list')
 
     def request(self, path, params={}, method='GET'):
+        _start = time.time()
+
         if not path.startswith('/'):
             path = '/' + path
         url = self.api_endpoint + path
 
         try:
             if method == 'POST':
-                query = {'api_key': self.api_key}
+                if (self.api_key):
+                    query = {'api_key': self.api_key}
                 resp = requests.post(url, params=query, data=params,
                                      timeout=60)
             elif method == 'GET':
-                params['api_key'] = self.api_key
+                if (self.api_key):
+                    params['api_key'] = self.api_key
                 resp = requests.get(url, params=params, timeout=60)
             else:
                 raise VultrError('Unsupported method %s' % method)
@@ -1351,14 +1358,24 @@ class Vultr(object):
                                  ' to an average of 1/s. Try your request' +
                                  ' again later.')
 
-        return resp.json()
+        # very simplistic synchronous rate limiting;
+        _elapsed = time.time() - _start
+        if (_elapsed < self.requestDuration):
+            time.sleep(self.requestDuration - _elapsed)
+
+        # return an empty json object if the API
+        # doesn't respond with a value.
+        if not resp.text:
+            return json_module.loads('{}')
+        else:
+            return resp.json()
 
 
 if __name__ == '__main__':
     print("Vultr API Python Libary")
     print("http://vultr.com")
 
-    api_key = ''
+    api_key = environ.get('VULTR_KEY')
     if len(sys.argv) > 1:
         api_key = sys.argv[1]
 
