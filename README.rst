@@ -15,6 +15,17 @@ Vultr provides a client library to the Vultr.com API.
     plans_json = vultr.plans_list()
 
 
+**Support**
+
+
+Python Vultr is supported on a volunteer basis. 
+
+* `Open an Issue <https://github.com/spry-group/python-vultr/issues/new>`_
+
+* .. image:: https://badges.gitter.im/Join%20Chat.svg
+      :target: https://gitter.im/spry-group/python-vultr
+
+
 **API**
 
 
