@@ -48,7 +48,43 @@ class AuthenticatedTests(unittest.TestCase):
         response = self.vultr.account_info()
 
     def test_server_create(self):
-        response = self.vultr.server_create(vpsplanid=29, dcid=1, osid=191 )
+        response = self.vultr.server_create(vpsplanid=29, dcid=1, osid=191,
+                                            label="python-vultr: test")
+        warnings.warn("Creating VM: " + str(response) +
+                      "\n This will cost money.")
+
+    def test_server_list(self):
+        AuthenticatedTests.server_list = self.vultr.server_list()
+        warnings.warn(str(AuthenticatedTests.server_list))
+
+    def test_server_list_by_subid(self):
+        for subid in AuthenticatedTests.server_list:
+            response = self.vultr.server_list(subid=subid)
+
+    def test_server_destroy(self):
+        servers = self.vultr.server_list()
+        for subid in servers:
+            # skip machines not made by tests.
+
+            if servers[subid]['label'] != 'python-vultr: test':
+                warnings.warn("skipping [" + subid + "]:\n" +
+                              str(servers[subid]))
+                continue
+
+            try:
+                response = self.vultr.server_destroy(subid=subid)
+            except VultrError as e:
+                # This should be it's own
+                # except VultrServerDestroyWithinFiveMinutesError as e:
+                msg = str(e)
+                self.assertEqual(msg, "Request failed. Check the response" +
+                                      " body for a more detailed" +
+                                      " description. Body: \nUnable to" +
+                                      " destroy server: Servers cannot be" +
+                                      " destroyed within 5 minutes of being" +
+                                      " created")
+
+                warnings.warn(msg)
 
 if __name__ == '__main__':
     unittest.main()
