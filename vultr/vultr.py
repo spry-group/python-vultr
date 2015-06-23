@@ -1,7 +1,8 @@
 import sys
 import requests
+import time
 import json as json_module
-
+from os import environ
 API_ENDPOINT = 'https://api.vultr.com'
 
 
@@ -14,6 +15,8 @@ class Vultr(object):
     def __init__(self, api_key):
         self.api_endpoint = API_ENDPOINT
         self.api_key = api_key
+        self.requestsPerSecond = 1
+        self.requestDuration = 1 / self.requestsPerSecond
 
     def snapshot_list(self):
         """
@@ -563,7 +566,7 @@ class Vultr(object):
         """
         return self.request('/v1/backup/list')
 
-    def server_list(self, subid):
+    def server_list(self, subid=None):
         """
         /v1/server/list
         GET - account
@@ -1309,6 +1312,8 @@ class Vultr(object):
         return self.request('/v1/os/list')
 
     def request(self, path, params={}, method='GET'):
+        _start = time.time()
+
         if not path.startswith('/'):
             path = '/' + path
         url = self.api_endpoint + path
@@ -1353,6 +1358,11 @@ class Vultr(object):
                                  ' to an average of 1/s. Try your request' +
                                  ' again later.')
 
+        # very simplistic synchronous rate limiting;
+        _elapsed = time.time() - _start
+        if (_elapsed < self.requestDuration):
+            time.sleep(self.requestDuration - _elapsed)
+
         # return an empty json object if the API
         # doesn't respond with a value.
         if not resp.text:
@@ -1365,7 +1375,7 @@ if __name__ == '__main__':
     print("Vultr API Python Libary")
     print("http://vultr.com")
 
-    api_key = ''
+    api_key = environ.get('VULTR_KEY')
     if len(sys.argv) > 1:
         api_key = sys.argv[1]
 
