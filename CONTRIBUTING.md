@@ -34,7 +34,7 @@ Be sure to clean up your Vultr account when done.
 python setup.py test
 ```
 
-** Release process **
+## Release Process
 
 Releases are tracked by creating a pull request from master to release. Ensure the version has been properly upticked before creating the release candidate pull request. The merged commit should be tagged with the proper version and built and uploaded to pypi. Currently the release process is manual. Once a more mature testing suite in place, it should be automated with TravisCI.
 
