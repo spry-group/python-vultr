@@ -566,7 +566,7 @@ class Vultr(object):
         """
         return self.request('/v1/backup/list')
 
-    def server_list(self, subid):
+    def server_list(self, subid=None):
         """
         /v1/server/list
         GET - account
