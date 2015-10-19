@@ -811,7 +811,7 @@ class Vultr(object):
                       isoid=None, scriptid=None, snapshotid=None,
                       enable_ipv6=None, enable_private_network=None,
                       label=None, sshkeyid=None, auto_backups=None,
-                      appid=None):
+                      appid=None, notify_activate=None):
         """
         /v1/server/create
         POST - account
@@ -861,6 +861,8 @@ class Vultr(object):
             associated with them)
         APPID integer (optional) If launching an application (OSID 186), this
             is the APPID to launch. See v1/app/list.
+        notify_activate string (optional, default 'yes') 'yes' or 'no'. If yes,
+            an activation email will be sent when the server is ready.
         """
         params = {'DCID': dcid, 'VPSPLANID': vpsplanid, 'OSID': osid}
         if ipxe_chain_url is not None:
@@ -883,6 +885,8 @@ class Vultr(object):
             params['auto_backups'] = auto_backups
         if appid is not None:
             params['APPID'] = appid
+        if notify_activate is not None:
+            params['notify_activate'] = notify_activate
         return self.request('/v1/server/create', params, 'POST')
 
     def server_list_ipv4(self, subid):
