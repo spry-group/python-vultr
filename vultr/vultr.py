@@ -811,7 +811,7 @@ class Vultr(object):
                       isoid=None, scriptid=None, snapshotid=None,
                       enable_ipv6=None, enable_private_network=None,
                       label=None, sshkeyid=None, auto_backups=None,
-                      appid=None, notify_activate=None):
+                      appid=None, notify_activate=None, ddos_protection=None):
         """
         /v1/server/create
         POST - account
@@ -863,6 +863,9 @@ class Vultr(object):
             is the APPID to launch. See v1/app/list.
         notify_activate string (optional, default 'yes') 'yes' or 'no'. If yes,
             an activation email will be sent when the server is ready.
+        ddos_protection string (optional, default 'no') 'yes' or 'no'.  If yes,
+            DDOS protection will be enabled on the subscription
+            (there is an additional charge for this)
         """
         params = {'DCID': dcid, 'VPSPLANID': vpsplanid, 'OSID': osid}
         if ipxe_chain_url is not None:
@@ -887,6 +890,8 @@ class Vultr(object):
             params['APPID'] = appid
         if notify_activate is not None:
             params['notify_activate'] = notify_activate
+        if ddos_protection is not None:
+            params['ddos_protection'] = ddos_protection
         return self.request('/v1/server/create', params, 'POST')
 
     def server_list_ipv4(self, subid):
