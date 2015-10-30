@@ -1,5 +1,5 @@
-import sys
-from setuptools import setup, find_packages
+'''Module setup'''
+from setuptools import setup
 
 '''
 packaging modeled after
@@ -8,13 +8,14 @@ https://hynek.me/articles/sharing-your-labor-of-love-pypi-quick-and-dirty/
 
 
 def read(filename):
+    '''Read content from file'''
     return open(filename).read()
 
 setup(
     name='vultr',
     version='0.1.2',
     install_requires=[
-      "requests"
+        "requests"
     ],
     description='Vultr.com API Client',
     long_description=(read('README.rst')),
