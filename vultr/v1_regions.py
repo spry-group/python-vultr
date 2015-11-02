@@ -7,7 +7,6 @@ class VultrRegions(VultrBase):
     def __init__(self, api_key):
         VultrBase.__init__(self, api_key)
 
-
     def availability(self, dcid, params=None):
         ''' /v1/regions/availability
         GET - public
@@ -20,7 +19,6 @@ class VultrRegions(VultrBase):
         '''
         params = update_params(params, {'DCID': dcid})
         return self.request('/v1/regions/availability', params, 'GET')
-
 
     def list(self, params=None):
         ''' /v1/regions/list

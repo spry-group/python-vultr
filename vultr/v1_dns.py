@@ -7,7 +7,6 @@ class VultrDNS(VultrBase):
     def __init__(self, api_key):
         VultrBase.__init__(self, api_key)
 
-
     def create_domain(self, domain, ipaddr, params=None):
         ''' /v1/dns/create_domain
         POST - account
@@ -20,7 +19,6 @@ class VultrDNS(VultrBase):
             'ip': ipaddr
         })
         return self.request('/v1/dns/create_domain', params, 'POST')
-
 
     def create_record(self, domain, name, _type, data, params=None):
         ''' /v1/dns/create_domain
@@ -37,7 +35,6 @@ class VultrDNS(VultrBase):
         })
         return self.request('/v1/dns/create_record', params, 'POST')
 
-
     def delete_domain(self, domain, params=None):
         ''' /v1/dns/delete_domain
         POST - account
@@ -47,7 +44,6 @@ class VultrDNS(VultrBase):
         '''
         params = update_params(params, {'domain': domain})
         return self.request('/v1/dns/delete_domain', params, 'POST')
-
 
     def delete_record(self, domain, recordid, params=None):
         ''' /v1/dns/delete_record
@@ -62,7 +58,6 @@ class VultrDNS(VultrBase):
         })
         return self.request('/v1/dns/delete_record', params, 'POST')
 
-
     def list(self, params=None):
         ''' /v1/dns/list
         GET - account
@@ -73,7 +68,6 @@ class VultrDNS(VultrBase):
         params = params if params else dict()
         return self.request('/v1/dns/list', params, 'GET')
 
-
     def records(self, domain, params=None):
         ''' /v1/dns/records
         GET - account
@@ -83,7 +77,6 @@ class VultrDNS(VultrBase):
         '''
         params = update_params(params, {'domain': domain})
         return self.request('/v1/dns/records', params, 'GET')
-
 
     def update_record(self, domain, recordid, params=None):
         ''' /v1/dns/update_record

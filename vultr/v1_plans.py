@@ -7,7 +7,6 @@ class VultrPlans(VultrBase):
     def __init__(self, api_key):
         VultrBase.__init__(self, api_key)
 
-
     def list(self, params=None):
         ''' /v1/plans/list
         GET - public

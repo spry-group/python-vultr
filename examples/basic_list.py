@@ -5,8 +5,7 @@
 import logging
 from os import environ
 from json import dumps
-from vultr import Vultr
-from vultr.exceptions import VultrError
+from vultr import Vultr, VultrError
 
 # Looks for an environment variable named "VULTR_KEY"
 API_KEY = environ.get('VULTR_KEY')
@@ -15,6 +14,7 @@ logging.basicConfig(
     format='%(asctime)s %(levelname)s [%(funcName)s():%(lineno)d] %(message)s'
 )
 logging.getLogger("requests").setLevel(logging.WARNING)
+
 
 def dump_info():
     '''Shows various details about the account & servers'''

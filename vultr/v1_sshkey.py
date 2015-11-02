@@ -7,7 +7,6 @@ class VultrSSHKey(VultrBase):
     def __init__(self, api_key):
         VultrBase.__init__(self, api_key)
 
-
     def create(self, name, ssh_key, params=None):
         ''' /v1/sshkey/create
         POST - account
@@ -21,7 +20,6 @@ class VultrSSHKey(VultrBase):
         })
         return self.request('/v1/sshkey/create', params, 'POST')
 
-
     def destroy(self, sshkeyid, params=None):
         ''' /v1/sshkey/destroy
         POST - account
@@ -33,7 +31,6 @@ class VultrSSHKey(VultrBase):
         params = update_params(params, {'SSHKEYID': sshkeyid})
         return self.request('/v1/sshkey/destroy', params, 'POST')
 
-
     def list(self, params=None):
         ''' /v1/sshkey/list
         GET - account
@@ -43,7 +40,6 @@ class VultrSSHKey(VultrBase):
         '''
         params = params if params else dict()
         return self.request('/v1/sshkey/list', params, 'GET')
-
 
     def update(self, sshkeyid, params=None):
         ''' /v1/sshkey/update
