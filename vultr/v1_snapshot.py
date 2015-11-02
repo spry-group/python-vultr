@@ -7,7 +7,6 @@ class VultrSnapshot(VultrBase):
     def __init__(self, api_key):
         VultrBase.__init__(self, api_key)
 
-
     def create(self, subid, params=None):
         ''' /v1/snapshot/create
         POST - account
@@ -19,7 +18,6 @@ class VultrSnapshot(VultrBase):
         params = update_params(params, {'SUBID': subid})
         return self.request('/v1/snapshot/create', params, 'POST')
 
-
     def destroy(self, snapshotid, params=None):
         ''' /v1/snapshot/destroy
         POST - account
@@ -30,7 +28,6 @@ class VultrSnapshot(VultrBase):
         '''
         params = update_params(params, {'SNAPSHOTID': snapshotid})
         return self.request('/v1/snapshot/destroy', params, 'POST')
-
 
     def list(self, params=None):
         ''' /v1/snapshot/list

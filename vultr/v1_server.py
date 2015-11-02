@@ -11,7 +11,6 @@ class VultrServer(VultrBase):
         self.ipv4 = VultrServerIPv4(api_key)
         self.ipv6 = VultrServerIPv6(api_key)
 
-
     def bandwidth(self, subid, params=None):
         ''' /v1/server/bandwidth
         GET - account
@@ -21,7 +20,6 @@ class VultrServer(VultrBase):
         '''
         params = update_params(params, {'SUBID': subid})
         return self.request('/v1/server/bandwidth', params, 'GET')
-
 
     def create(self, dcid, vpsplanid, osid, params=None):
         ''' /v1/server/create
@@ -40,7 +38,6 @@ class VultrServer(VultrBase):
         })
         return self.request('/v1/server/create', params, 'POST')
 
-
     def destroy(self, subid, params=None):
         ''' /v1/server/destroy
         POST - account
@@ -53,7 +50,6 @@ class VultrServer(VultrBase):
         params = update_params(params, {'SUBID': subid})
         return self.request('/v1/server/destroy', params, 'POST')
 
-
     def get_user_data(self, subid, params=None):
         ''' /v1/server/get_user_data
         GET - account
@@ -63,7 +59,6 @@ class VultrServer(VultrBase):
         '''
         params = update_params(params, {'SUBID': subid})
         return self.request('/v1/server/get_user_data', params, 'GET')
-
 
     def halt(self, subid, params=None):
         ''' /v1/server/halt
@@ -78,7 +73,6 @@ class VultrServer(VultrBase):
         params = update_params(params, {'SUBID': subid})
         return self.request('/v1/server/halt', params, 'POST')
 
-
     def label_set(self, subid, label, params=None):
         ''' /v1/server/label_set
         POST - account
@@ -91,7 +85,6 @@ class VultrServer(VultrBase):
             'label': label
         })
         return self.request('/v1/server/label_set', params, 'POST')
-
 
     def list(self, subid=None, params=None):
         ''' /v1/server/list
@@ -111,7 +104,6 @@ class VultrServer(VultrBase):
         )
         return self.request('/v1/server/list', params, 'GET')
 
-
     def neighbors(self, subid, params=None):
         ''' v1/server/neighbors
         GET - account
@@ -122,7 +114,6 @@ class VultrServer(VultrBase):
         '''
         params = update_params(params, {'SUBID': subid})
         return self.request('/v1/server/neighbors', params, 'GET')
-
 
     def os_change(self, subid, osid, params=None):
         ''' /v1/server/os_change
@@ -138,7 +129,6 @@ class VultrServer(VultrBase):
         })
         return self.request('/v1/server/os_change', params, 'POST')
 
-
     def os_change_list(self, subid, params=None):
         ''' /v1/server/os_change_list
         GET - account
@@ -149,7 +139,6 @@ class VultrServer(VultrBase):
         '''
         params = update_params(params, {'SUBID': subid})
         return self.request('/v1/server/os_change_list', params, 'GET')
-
 
     def reboot(self, subid, params=None):
         ''' /v1/server/reboot
@@ -162,7 +151,6 @@ class VultrServer(VultrBase):
         params = update_params(params, {'SUBID': subid})
         return self.request('/v1/server/reboot', params, 'POST')
 
-
     def reinstall(self, subid, params=None):
         ''' /v1/server/reinstall
         POST - account
@@ -174,7 +162,6 @@ class VultrServer(VultrBase):
         '''
         params = update_params(params, {'SUBID': subid})
         return self.request('/v1/server/reinstall', params, 'POST')
-
 
     def restore_backup(self, subid, backupid, params=None):
         ''' /v1/server/restore_backup
@@ -190,7 +177,6 @@ class VultrServer(VultrBase):
         })
         return self.request('/v1/server/restore_backup', params, 'POST')
 
-
     def restore_snapshot(self, subid, snapshotid, params=None):
         ''' /v1/server/restore_snapshot
         POST - account
@@ -204,7 +190,6 @@ class VultrServer(VultrBase):
             'SNAPSHOTID': snapshotid
         })
         return self.request('/v1/server/restore_snapshot', params, 'POST')
-
 
     def set_user_data(self, subid, userdata, params=None):
         ''' /v1/server/set_user_data
@@ -221,7 +206,6 @@ class VultrServer(VultrBase):
         })
         return self.request('/v1/server/set_user_data', params, 'POST')
 
-
     def start(self, subid, params=None):
         ''' /v1/server/start
         POST - account
@@ -232,7 +216,6 @@ class VultrServer(VultrBase):
         '''
         params = update_params(params, {'SUBID': subid})
         return self.request('/v1/server/start', params, 'POST')
-
 
     def upgrade_plan(self, subid, vpsplanid, params=None):
         ''' /v1/server/upgrade_plan
@@ -247,7 +230,6 @@ class VultrServer(VultrBase):
             'VPSPLANID': vpsplanid
         })
         return self.request('/v1/server/upgrade_plan', params, 'POST')
-
 
     def upgrade_plan_list(self, subid, params=None):
         ''' /v1/server/upgrade_plan_list
