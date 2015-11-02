@@ -13,7 +13,7 @@ def read(filename):
 
 setup(
     name='vultr',
-    version='0.1.2',
+    version='1.0.0rc1',
     install_requires=[
         "requests"
     ],
