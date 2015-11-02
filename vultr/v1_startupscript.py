@@ -7,7 +7,6 @@ class VultrStartupScript(VultrBase):
     def __init__(self, api_key):
         VultrBase.__init__(self, api_key)
 
-
     def create(self, name, script, params=None):
         ''' /v1/startupscript/create
         POST - account
@@ -21,7 +20,6 @@ class VultrStartupScript(VultrBase):
         })
         return self.request('/v1/startupscript/create', params, 'POST')
 
-
     def destroy(self, scriptid, params=None):
         ''' /v1/startupscript/destroy
         POST - account
@@ -31,7 +29,6 @@ class VultrStartupScript(VultrBase):
         '''
         params = update_params(params, {'SCRIPTID': scriptid})
         return self.request('/v1/startupscript/destroy', params, 'POST')
-
 
     def list(self, params=None):
         ''' /v1/startupscript/list
@@ -45,7 +42,6 @@ class VultrStartupScript(VultrBase):
         '''
         params = params if params else dict()
         return self.request('/v1/startupscript/list', params, 'GET')
-
 
     def update(self, scriptid, params=None):
         ''' /v1/startupscript/update

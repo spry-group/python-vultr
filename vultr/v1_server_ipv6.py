@@ -7,7 +7,6 @@ class VultrServerIPv6(VultrBase):
     def __init__(self, api_key):
         VultrBase.__init__(self, api_key)
 
-
     def list_ipv6(self, subid, params=None):
         ''' /v1/server/list_ipv6
         GET - account
@@ -34,7 +33,6 @@ class VultrServerIPv6(VultrBase):
         })
         return self.request('/v1/server/reverse_delete_ipv6', params, 'POST')
 
-
     def reverse_list_ipv6(self, subid, params=None):
         ''' /v1/server/reverse_list_ipv6
         GET - account
@@ -47,7 +45,6 @@ class VultrServerIPv6(VultrBase):
         '''
         params = update_params(params, {'SUBID': subid})
         return self.request('/v1/server/reverse_list_ipv6', params, 'GET')
-
 
     def reverse_set_ipv6(self, subid, ipaddr, entry, params=None):
         ''' /v1/server/reverse_set_ipv6

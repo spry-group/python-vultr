@@ -7,7 +7,6 @@ class VultrAccount(VultrBase):
     def __init__(self, api_key):
         VultrBase.__init__(self, api_key)
 
-
     def info(self, params=None):
         ''' /v1/account/info
         GET - account

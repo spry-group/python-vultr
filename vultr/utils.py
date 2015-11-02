@@ -2,9 +2,13 @@
 import requests
 import time
 import json as json_module
-from exceptions import VultrError
 
 API_ENDPOINT = 'https://api.vultr.com'
+
+
+class VultrError(RuntimeError):
+    '''Vultr custom exception'''
+    pass
 
 
 class VultrBase(object):
@@ -14,12 +18,10 @@ class VultrBase(object):
         self.api_key = api_key
         self.set_requests_per_second(1)
 
-
     def set_requests_per_second(self, req_per_second):
         '''Adjusts the request/second at run-time'''
         self.req_per_second = req_per_second
         self.req_duration = 1 / self.req_per_second
-
 
     def _request_get_helper(self, url, params=None):
         '''API GET request helper'''
@@ -30,13 +32,11 @@ class VultrBase(object):
             params['api_key'] = self.api_key
         return requests.get(url, params=params, timeout=60)
 
-
     def _request_post_helper(self, url, params=None):
         '''API POST helper'''
         if self.api_key:
             query = {'api_key': self.api_key}
         return requests.post(url, params=query, data=params, timeout=60)
-
 
     def _request_helper(self, url, params, method):
         '''API request helper method'''
@@ -48,7 +48,6 @@ class VultrBase(object):
             raise VultrError('Unsupported method %s' % method)
         except requests.RequestException as ex:
             raise RuntimeError(ex)
-
 
     def request(self, path, params=None, method='GET'):
         '''API request / call method'''

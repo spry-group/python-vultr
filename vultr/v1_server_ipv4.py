@@ -7,7 +7,6 @@ class VultrServerIPv4(VultrBase):
     def __init__(self, api_key):
         VultrBase.__init__(self, api_key)
 
-
     def create(self, subid, params=None):
         ''' /v1/server/create_ipv4
         POST - account
@@ -20,7 +19,6 @@ class VultrServerIPv4(VultrBase):
         '''
         params = update_params(params, {'SUBID': subid})
         return self.request('/v1/server/create_ipv4', params, 'POST')
-
 
     def destroy(self, subid, ipaddr, params=None):
         ''' /v1/server/destroy_ipv4
@@ -37,7 +35,6 @@ class VultrServerIPv4(VultrBase):
         })
         return self.request('/v1/server/destroy_ipv4', params, 'POST')
 
-
     def list(self, subid, params=None):
         ''' /v1/server/list_ipv4
         GET - account
@@ -48,7 +45,6 @@ class VultrServerIPv4(VultrBase):
         '''
         params = update_params(params, {'SUBID': subid})
         return self.request('/v1/server/list_ipv4', params, 'GET')
-
 
     def reverse_default(self, subid, ipaddr, params=None):
         ''' /v1/server/reverse_default_ipv4
@@ -64,7 +60,6 @@ class VultrServerIPv4(VultrBase):
             'ip': ipaddr
         })
         return self.request('/v1/server/reverse_default_ipv4', params, 'POST')
-
 
     def reverse_set(self, subid, ipaddr, entry, params=None):
         ''' /v1/server/reverse_set_ipv4
