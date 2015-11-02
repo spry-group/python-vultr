@@ -1,5 +1,5 @@
 '''Partial class to handle Vultr Account API calls'''
-from utils import VultrBase
+from .utils import VultrBase
 
 
 class VultrAccount(VultrBase):

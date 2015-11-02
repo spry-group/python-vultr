@@ -1,17 +1,17 @@
 '''Python library for the Vultr cloud API'''
-from . utils import VultrBase
-from . v1_account import VultrAccount
-from . v1_app import VultrApp
-from . v1_backup import VultrBackup
-from . v1_dns import VultrDNS
-from . v1_iso import VultrISO
-from . v1_os import VultrOS
-from . v1_plans import VultrPlans
-from . v1_regions import VultrRegions
-from . v1_server import VultrServer
-from . v1_snapshot import VultrSnapshot
-from . v1_sshkey import VultrSSHKey
-from . v1_startupscript import VultrStartupScript
+from .utils import VultrBase
+from .v1_account import VultrAccount
+from .v1_app import VultrApp
+from .v1_backup import VultrBackup
+from .v1_dns import VultrDNS
+from .v1_iso import VultrISO
+from .v1_os import VultrOS
+from .v1_plans import VultrPlans
+from .v1_regions import VultrRegions
+from .v1_server import VultrServer
+from .v1_snapshot import VultrSnapshot
+from .v1_sshkey import VultrSSHKey
+from .v1_startupscript import VultrStartupScript
 
 
 class Vultr(VultrBase):

@@ -30,7 +30,8 @@ class UnauthenticatedTests(unittest.TestCase):
         self.vultr.app.list()
 
 
-@unittest.skipIf(not os.environ.get('VULTR_KEY'), 'Skipping AuthenticatedTests')
+@unittest.skipIf(not os.environ.get('VULTR_KEY'),
+                 'Skipping AuthenticatedTests')
 class AuthenticatedTests(unittest.TestCase):
     '''Tests with authentication (VULTR_KEY)'''
     @classmethod

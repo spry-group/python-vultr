@@ -1,7 +1,7 @@
 '''Partial class to handle Vultr Server API calls'''
-from utils import VultrBase, update_params
-from v1_server_ipv4 import VultrServerIPv4
-from v1_server_ipv6 import VultrServerIPv6
+from .utils import VultrBase, update_params
+from .v1_server_ipv4 import VultrServerIPv4
+from .v1_server_ipv6 import VultrServerIPv6
 
 
 class VultrServer(VultrBase):

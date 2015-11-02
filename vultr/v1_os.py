@@ -1,5 +1,5 @@
 '''Partial class to handle Vultr OS API calls'''
-from utils import VultrBase
+from .utils import VultrBase
 
 
 class VultrOS(VultrBase):

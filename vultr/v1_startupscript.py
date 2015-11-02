@@ -1,5 +1,5 @@
 '''Partial class to handle Vultr Startup Script API calls'''
-from utils import VultrBase, update_params
+from .utils import VultrBase, update_params
 
 
 class VultrStartupScript(VultrBase):

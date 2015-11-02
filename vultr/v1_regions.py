@@ -1,5 +1,5 @@
 '''Partial class to handle Vultr Regions API calls'''
-from utils import VultrBase, update_params
+from .utils import VultrBase, update_params
 
 
 class VultrRegions(VultrBase):
