@@ -7,26 +7,29 @@ Vultr provides a client library to the Vultr.com API.
 
 **Usage**
 
+.. code:: python
 
-    ```python
     api_key = 'XXXXXXXXX'
     vultr = Vultr(api_key)
     plans_json = vultr.plans.list()
-    '''
+
 
 
 **Testing**
 
     From the repo root directory
     Performs generic, unauthenticated tests
-    ```bash
+    
+.. code:: shell
+    
     python -m unittest -v tests.test_vultr.UnauthenticatedTests
-    ```
 
-    Requires the environment variable VULTR_KEY to be set
-    ```bash
+
+Requires the environment variable VULTR_KEY to be set
+
+.. code:: shell
+
     python -m unittest -v tests.test_vultr.AuthenticatedTests
-    ```
 
 
 **Support**
