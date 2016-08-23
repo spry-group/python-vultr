@@ -46,54 +46,56 @@ Python Vultr is supported on a volunteer basis.
 **API**
 
 
-* def __init__(self, api_key):
-* def snapshot.list(self):
-* def snapshot.destroy(self, snapshotid):
-* def snapshot.create(self, subid):
-* def iso.list(self):
-* def plans.list(self):
-* def regions.list(self):
-* def regions.availability(self, dcid):
-* def startupscript.list(self):
-* def startupscript.destroy(self, scriptid):
-* def startupscript.create(self, name, script):
-* def startupscript.update(self, scriptid, name, script):
-* def dns.list(self):
-* def dns.records(self, domain):
-* def dns.create_domain(self, domain, serverip):
-* def dns.delete_domain(self, domain):
-* def dns.delete_record(self, domain, recordid):
-* def dns.create_record(self, domain, name, type, data, ttl=None,
-* def sshkey.list(self):
-* def sshkey.destroy(self, sshkeyid):
-* def sshkey.create(self):
-* def sshkey.update(self, sshkeyid, name=None, ssh_key=None):
-* def backup.list(self):
-* def server.list(self, subid):
-* def server.bandwidth(self):
-* def server.reboot(self):
-* def server.halt(self):
-* def server.start(self):
-* def server.destroy(self):
-* def server.reinstall(self):
-* def server.restore_snapshot(self, subid, snapshotid):
-* def server.restore_backup(self, subid, backupid):
-* def server.create(self, dcid, vpsplanid, osid, ipxe_chain_url=None,
-* def server.list_ipv4(self, subid):
-* def server.reverse_set_ipv4(self):
-* def server.reverse_default_ipv4(self, subid, ip):
-* def server.list_ipv6(self):
-* def server.reverse_list_ipv6(self):
-* def server.reverse_set_ipv6(self, subid, ip, entry):
-* def server.reverse_delete_ipv6(self, subid, ip):
-* def server.label_set(self, subid, label):
-* def server.create_ipv4(self, subid, reboot):
-* def server.destroy_ipv4(self, subid, ip):
-* def server.os_change_list(self):
-* def server.os_change(self, subid, osid):
-* def server.upgrade_plan_list(self):
-* def server.upgrade_plan(self, subid, vpsplanid):
-* def app.list(self):
-* def account.info(self):
-* def os.list(self):
-* def request(self, path, params={}, method='GET'):
+* def account.info(self, params=None):
+* def app.list(self, params=None):
+* def backup.list(self, params=None):
+* def dns.create_domain(self, domain, ipaddr, params=None):
+* def dns.create_record(self, domain, name, _type, data, params=None):
+* def dns.delete_domain(self, domain, params=None):
+* def dns.delete_record(self, domain, recordid, params=None):
+* def dns.list(self, params=None):
+* def dns.records(self, domain, params=None):
+* def dns.update_record(self, domain, recordid, params=None):
+* def iso.list(self, params=None):
+* def os.list(self, params=None):
+* def plans.list(self, params=None):
+* def regions.availability(self, dcid, params=None):
+* def regions.list(self, params=None):
+* def server.ipv4.create(self, subid, params=None):
+* def server.ipv4.destroy(self, subid, ipaddr, params=None):
+* def server.ipv4.list(self, subid, params=None):
+* def server.ipv4.reverse_default(self, subid, ipaddr, params=None):
+* def server.ipv4.reverse_set(self, subid, ipaddr, entry, params=None):
+* def server.ipv6.list_ipv6(self, subid, params=None):
+* def server.ipv6.reverse_delete_ipv6(self, subid, ipaddr, params=None):
+* def server.ipv6.reverse_list_ipv6(self, subid, params=None):
+* def server.ipv6.reverse_set_ipv6(self, subid, ipaddr, entry, params=None):
+* def server.bandwidth(self, subid, params=None):
+* def server.create(self, dcid, vpsplanid, osid, params=None):
+* def server.destroy(self, subid, params=None):
+* def server.get_user_data(self, subid, params=None):
+* def server.halt(self, subid, params=None):
+* def server.label_set(self, subid, label, params=None):
+* def server.list(self, subid=None, params=None):
+* def server.neighbors(self, subid, params=None):
+* def server.os_change(self, subid, osid, params=None):
+* def server.os_change_list(self, subid, params=None):
+* def server.reboot(self, subid, params=None):
+* def server.reinstall(self, subid, params=None):
+* def server.restore_backup(self, subid, backupid, params=None):
+* def server.restore_snapshot(self, subid, snapshotid, params=None):
+* def server.set_user_data(self, subid, userdata, params=None):
+* def server.start(self, subid, params=None):
+* def server.upgrade_plan(self, subid, vpsplanid, params=None):
+* def server.upgrade_plan_list(self, subid, params=None):
+* def snapshot.create(self, subid, params=None):
+* def snapshot.destroy(self, snapshotid, params=None):
+* def snapshot.list(self, params=None):
+* def sshkey.create(self, name, ssh_key, params=None):
+* def sshkey.destroy(self, sshkeyid, params=None):
+* def sshkey.list(self, params=None):
+* def sshkey.update(self, sshkeyid, params=None):
+* def startupscript.create(self, name, script, params=None):
+* def startupscript.destroy(self, scriptid, params=None):
+* def startupscript.list(self, params=None):
+* def startupscript.update(self, scriptid, params=None):
