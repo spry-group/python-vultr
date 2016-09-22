@@ -3,6 +3,7 @@ import unittest
 import os
 from time import sleep
 import warnings
+import pprint
 from vultr import Vultr, VultrError
 
 VULTR_TEST_LABEL = 'python-vultr: test'
@@ -86,7 +87,7 @@ class AuthenticatedTests(unittest.TestCase):
         response = self.vultr.server.create(
             1,      # DCID (New Jersey, USA)
             29,     # VPSPLANID (768 MB RAM,15 GB SSD,1.00 TB BW)
-            191,    # OSID (Ubuntu 15.04 x64)
+            216,    # OSID (Ubuntu 16.04 i386)
             {
                 'label': VULTR_TEST_LABEL
             }
@@ -100,7 +101,6 @@ class AuthenticatedTests(unittest.TestCase):
     def test_server_list(self):
         '''List servers'''
         AuthenticatedTests.server_list = self.vultr.server.list()
-        warnings.warn(str(AuthenticatedTests.server_list))
 
     def test_server_list_by_subid(self):
         '''List server by SUBID'''
