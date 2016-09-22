@@ -3,7 +3,7 @@ Vultr
 .. image:: https://travis-ci.org/spry-group/python-vultr.svg?branch=master
     :target: https://travis-ci.org/spry-group/python-vultr
 
-Vultr provides a client library to the Vultr.com API.
+Vultr provides a client library to the `Vultr.com <http://www.vultr.com/?ref=6989379-3B>` API.
 
 **Usage**
 
