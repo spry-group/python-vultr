@@ -5,3 +5,5 @@ Lib
 Scripts
 *.egg-info
 *.pyc
+
+venv
