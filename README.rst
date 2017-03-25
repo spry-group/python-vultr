@@ -1,5 +1,9 @@
 Vultr
 =====
+
+.. image:: https://badges.gitter.im/Join%20Chat.svg
+   :alt: Join the chat at https://gitter.im/spry-group/python-vultr
+   :target: https://gitter.im/spry-group/python-vultr?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge
 .. image:: https://travis-ci.org/spry-group/python-vultr.svg?branch=master
     :target: https://travis-ci.org/spry-group/python-vultr
 
