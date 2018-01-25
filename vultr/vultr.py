@@ -9,6 +9,7 @@ from .v1_iso import VultrISO
 from .v1_os import VultrOS
 from .v1_plans import VultrPlans
 from .v1_regions import VultrRegions
+from .v1_reservedip import VultrReservedIP
 from .v1_server import VultrServer
 from .v1_snapshot import VultrSnapshot
 from .v1_sshkey import VultrSSHKey
@@ -33,6 +34,7 @@ class Vultr(VultrBase):
         self.os = VultrOS(api_key)
         self.plans = VultrPlans(api_key)
         self.regions = VultrRegions(api_key)
+        self.reservedip = VultrReservedIP(api_key)
         self.server = VultrServer(api_key)
         self.snapshot = VultrSnapshot(api_key)
         self.sshkey = VultrSSHKey(api_key)
