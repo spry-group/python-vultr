@@ -57,6 +57,7 @@ Python Vultr is supported on a volunteer basis.
 * def dns.records(self, domain, params=None):
 * def dns.update_record(self, domain, recordid, params=None):
 * def iso.list(self, params=None):
+* def iso.create_from_url(self, url, params=None)
 * def os.list(self, params=None):
 * def plans.list(self, params=None):
 * def regions.availability(self, dcid, params=None):
