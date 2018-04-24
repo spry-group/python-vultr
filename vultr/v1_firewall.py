@@ -3,7 +3,7 @@ from .utils import VultrBase
 
 
 class VultrFirewall(VultrBase):
-    '''Handles Bultr Firewall API calls'''
+    '''Handles Vultr Firewall API calls'''
     def __init__(self, api_key):
         VultrBase.__init__(self, api_key)
 
