@@ -49,6 +49,10 @@ class AuthenticatedTests(unittest.TestCase):
         '''List DNS records'''
         self.vultr.dns.list()
 
+    def test_firewall_group_list(self):
+        '''List firewall groups'''
+        self.vultr.firewall.group_list()
+
     def test_iso_list(self):
         '''List ISOs / images'''
         self.vultr.iso.list()
