@@ -4,6 +4,7 @@ from .v1_account import VultrAccount
 from .v1_app import VultrApp
 from .v1_backup import VultrBackup
 from .v1_dns import VultrDNS
+from .v1_firewall import VultrFirewall
 from .v1_iso import VultrISO
 from .v1_os import VultrOS
 from .v1_plans import VultrPlans
@@ -25,6 +26,7 @@ class Vultr(VultrBase):
         self.app = VultrApp(api_key)
         self.backup = VultrBackup(api_key)
         self.dns = VultrDNS(api_key)
+        self.firewall = VultrFirewall(api_key)
         self.iso = VultrISO(api_key)
         # pylint: disable=invalid-name
         # OS is the Vultr API namespace name
