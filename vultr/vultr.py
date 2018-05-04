@@ -811,7 +811,7 @@ class Vultr(object):
                       isoid=None, scriptid=None, snapshotid=None,
                       enable_ipv6=None, enable_private_network=None,
                       label=None, sshkeyid=None, auto_backups=None,
-                      appid=None):
+                      appid=None, userdata=None):
         """
         /v1/server/create
         POST - account
@@ -883,6 +883,8 @@ class Vultr(object):
             params['auto_backups'] = auto_backups
         if appid is not None:
             params['APPID'] = appid
+        if userdata is not None:
+            params['userdata'] = userdata
         return self.request('/v1/server/create', params, 'POST')
 
     def server_list_ipv4(self, subid):
