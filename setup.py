@@ -18,7 +18,8 @@ setup(
         "requests"
     ],
     description='Vultr.com API Client',
-    long_description=(read('README.rst')),
+    long_description=(read('README.md')),
+    long_description_content_type='text/markdown',
     url='http://github.com/spry-group/python-vultr',
     author='Darrel O\'Pry',
     author_email='darrel.opry@spry-group.com',

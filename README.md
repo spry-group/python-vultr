@@ -1,50 +1,41 @@
-Vultr
-=====
-.. image:: https://travis-ci.org/spry-group/python-vultr.svg?branch=master
-    :target: https://travis-ci.org/spry-group/python-vultr
+# Vultr
 
-Vultr provides a client library to the `Vultr.com <http://www.vultr.com/?ref=6989379-3B>` API.
+[![build status](https://travis-ci.org/spry-group/python-vultr.svg?branch=master)](https://travis-ci.org/spry-group/python-vultr)
 
-**Usage**
+Vultr provides a client library to the [Vultr.com](http://www.vultr.com/?ref=6989379-3B) API.
 
-.. code:: python
+## Usage
 
-    api_key = 'XXXXXXXXX'
-    vultr = Vultr(api_key)
-    plans_json = vultr.plans.list()
+```python
+api_key = 'XXXXXXXXX'
+vultr = Vultr(api_key)
+plans_json = vultr.plans.list()
+```
 
+## Testing
 
-
-**Testing**
-
-    From the repo root directory
-    Performs generic, unauthenticated tests
+From the repo root directory
+Performs generic, unauthenticated tests
     
-.. code:: shell
-    
-    python -m unittest -v tests.test_vultr.UnauthenticatedTests
-
+```shell
+python -m unittest -v tests.test_vultr.UnauthenticatedTests
+```
 
 Requires the environment variable VULTR_KEY to be set
 
-.. code:: shell
+```shell
+python -m unittest -v tests.test_vultr.AuthenticatedTests
+```
 
-    python -m unittest -v tests.test_vultr.AuthenticatedTests
-
-
-**Support**
-
+## Support
 
 Python Vultr is supported on a volunteer basis.
 
-* `Open an Issue <https://github.com/spry-group/python-vultr/issues/new>`_
-
-* .. image:: https://badges.gitter.im/Join%20Chat.svg
-      :target: https://gitter.im/spry-group/python-vultr
+* [Open an Issue](https://github.com/spry-group/python-vultr/issues/new)
+* [![Gitter.im](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/spry-group/python-vultr)
 
 
-**API**
-
+## API
 
 * def account.info(self, params=None):
 * def app.list(self, params=None):
