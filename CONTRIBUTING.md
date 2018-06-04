@@ -17,9 +17,14 @@ Please send an email to darrel.opry@spry-group.com if you are interested in beco
 ## Development
 
 ```
- pip install setuptools virtualenv pep8 wheel twine
+# dependencies
+pip install -r requirements.txt
 
+# development dependencies
+pip install setuptools virtualenv pep8 wheel twine
 ```
+
+When makeing commit messages please follow the [Angular Git Commit Guidelines](https://github.com/angular/angular.js/blob/master/DEVELOPERS.md#-git-commit-guidelines)
 
 ## Testing
 
@@ -39,10 +44,10 @@ python setup.py test
 Releases are tracked by creating a pull request from master to release. Ensure the version has been properly upticked before creating the release candidate pull request. The merged commit should be tagged with the proper version and built and uploaded to pypi. Currently the release process is manual. Once a more mature testing suite in place, it should be automated with TravisCI.
 
 ```
+rm -rf dist/
 python setup.py sdist
 python setup.py bdist_wheel
-python setup.py sdist upload -r pypi
-python setup.py bdist_wheel upload -r pypi
+twine upload -r pypi .\dist\vultr*
 ```
 
 based on: [Sharing Your Labor of Love: PyPI Quick and Dirty](https://hynek.me/articles/sharing-your-labor-of-love-pypi-quick-and-dirty/)
