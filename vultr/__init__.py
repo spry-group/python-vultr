@@ -1,3 +1,6 @@
-from .vultr import Vultr, VultrError
-__version__ = '0.1.2'
-__license__ = 'MIT'
+'''Vultr cloud API client library'''
+from .vultr import Vultr
+from .utils import VultrError
+
+assert Vultr
+assert VultrError
