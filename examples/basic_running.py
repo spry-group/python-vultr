@@ -27,9 +27,9 @@ def servers_running():
     except VultrError as ex:
         logging.error('VultrError: %s', ex)
 
-    for key in serverList:
-        if serverList[key]['power_status'] == 'running':
-            logging.info(serverList[key]['label'] + " is up and running.")
+    for serverID in serverList:
+        if serverList[serverID]['power_status'] == 'running':
+            logging.info(serverList[serverID]['label'] + " is up and running.")
 
 def main():
     '''Entry point'''
