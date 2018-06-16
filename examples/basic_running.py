@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-'''Basic app to list requestsunning servers'''
+'''Basic app to list all running servers'''
 
 import logging
 from os import environ
