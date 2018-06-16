@@ -30,7 +30,7 @@ def servers_running():
     for key in serverList:
         if serverList[key]['power_status'] == 'running':
             logging.info(serverList[key]['label'] + " will be gracefully shutdown.")
-            vultr.halt(key)
+            vultr.server.halt(key)
 
 def main():
     '''Entry point'''
