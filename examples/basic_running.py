@@ -4,7 +4,7 @@
 
 import logging
 from os import environ
-from json import dumps
+from json import dumps, load
 from vultr import Vultr, VultrError
 
 # Looks for an environment variable named "VULTR_KEY"
@@ -16,17 +16,20 @@ logging.basicConfig(
 logging.getLogger("requests").setLevel(logging.WARNING)
 
 def servers_running():
-    '''Shows various details about the account & servers'''
+    '''Shows running servers'''
     vultr = Vultr(API_KEY)
 
     try:
             serverList = vultr.server.list()
-            logging.info('Listing servers:\n%s', dumps(
-            serverList, indent=2
-        ))
+            #logging.info('Listing servers:\n%s', dumps(
+            #serverList, indent=2
+        #))
     except VultrError as ex:
         logging.error('VultrError: %s', ex)
 
+    for key in serverList:
+        if serverList[key]['power_status'] == 'running':
+            logging.info(serverList[key]['label'] + " is up and running.")
 
 def main():
     '''Entry point'''
