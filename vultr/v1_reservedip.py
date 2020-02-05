@@ -20,3 +20,17 @@ class VultrReservedIP(VultrBase):
             'ip_type': ip_type
         })
         return self.request('/v1/reservedip/create', params, 'POST')
+    
+    def convert(self, subid, ip_address, params=None):
+        ''' /v1/reservedip/convert
+        POST - account
+        Convert an existing IP on a subscription to a reserved IP. 
+        Returns the SUBID of the newly created reserved IP.
+
+        Link: https://www.vultr.com/api/#reservedip_convert
+        '''
+        params = update_params(params, {
+            'SUBID': subid,
+            'ip_address': ip_address
+        })
+        return self.request('/v1/reservedip/convert', params, 'POST')
